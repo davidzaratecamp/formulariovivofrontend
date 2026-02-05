@@ -42,9 +42,20 @@ function App() {
 
   const handleChange = (e) => {
     const { name, value } = e.target
+    let filteredValue = value
+
+    // Filtrar caracteres según el campo
+    if (name === 'nombre') {
+      // Solo letras, espacios y tildes (sin números)
+      filteredValue = value.replace(/[0-9]/g, '')
+    } else if (name === 'cedula' || name === 'celular') {
+      // Solo números (sin letras ni caracteres especiales)
+      filteredValue = value.replace(/\D/g, '')
+    }
+
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: filteredValue
     }))
     if (errors[name]) {
       setErrors(prev => ({
